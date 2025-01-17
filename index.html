@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adhome</title>
+    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: white;
+        }
+        
+        html {
+            font-size: 62.5%;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .header {
+            position: fixed;
+            font-family: 'Lato', sans-serif;
+            /* Membuat header tetap di atas saat scroll */
+            top: 0;
+            /* Posisi di bagian atas */
+            left: 0;
+            width: 100%;
+            /* Meluas secara penuh */
+            z-index: 1000;
+            /* Agar berada di atas elemen lain */
+            border-bottom: 1px solid #E2E8F0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background-color: white;
+            font-weight: 400;
+            /* Pastikan memiliki warna latar */
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .6rem .6rem;
+            z-index: 1000;
+            position: relative;
+        }
+        
+        .hamburger {
+            display: none;
+        }
+        
+        .hamburger {
+            background: linear-gradient(270deg, #036E89, #369CB0);
+            /* Warna latar belakang biru */
+            padding: 3px 5px;
+            /* Beri sedikit ruang untuk garis-garis */
+            border-radius: 5px;
+            /* Tambahkan border-radius untuk sudut yang lembut */
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bar {
+            display: block;
+            width: 24px;
+            height: 3px;
+            margin: 5px auto;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            /* background-color: #101010; */
+            background-color: white;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-item {
+            margin-left: 5rem;
+        }
+        
+        .nav-link {
+            /* font-size: 1.6rem; */
+            font-size: 2rem;
+            font-weight: 400;
+            /* color: #475569; */
+            color: black;
+            /* change */
+        }
+        
+        .nav-link:hover {
+            color: #369CB0;
+        }
+        
+        .nav-logo img {
+            text-decoration: none;
+            width: 200px;
+            /* Ukuran logo, sesuaikan jika perlu */
+            height: auto;
+            margin-right: 10px;
+            margin-left: 30px;
+            /* Memberikan jarak antara logo dan teks */
+        }
+        
+        .action-btn {
+            background: linear-gradient(270deg, #036E89, #369CB0);
+            /* Latar awal gradasi */
+            color: white;
+            /* Warna teks */
+            padding: 10px 20px;
+            /* Spasi di dalam tombol */
+            border-radius: 5px;
+            /* Membuat sudut melengkung */
+            font-size: 1.6rem;
+            /* Ukuran font */
+            font-weight: bold;
+            /* Membuat teks tebal */
+            text-decoration: none;
+            /* Menghilangkan underline */
+            margin-left: 2rem;
+            /* Margin kiri */
+            margin-right: 30px;
+            /* Margin kanan */
+            transition: all 0.1s ease;
+            /* Efek transisi untuk hover */
+            /* Border transparan */
+            display: inline-block;
+            /* Agar tombol terlihat rapi */
+            text-align: center;
+            /* Pusatkan teks */
+            cursor: pointer;
+            /* Ubah kursor menjadi pointer */
+        }
+        
+        .action-btn:hover {
+            background: white;
+            /* Pastikan seluruh properti background diganti */
+            color: #369CB0;
+            /* Teks berubah menjadi biru */
+            border: 2px solid #036E89;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            header {
+                padding: 0.5rem;
+            }
+            .action-btn {
+                padding: 9px 14px;
+                font-size: 1.3rem;
+                margin: 0;
+                margin-right: -2rem;
+            }
+            .nav-logo img {
+                width: 120px;
+                height: auto;
+                margin: 0;
+            }
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 6rem;
+                flex-direction: column;
+                /* background-color: #fff; */
+                background-color: white;
+                width: 100%;
+                transition: 0.3s;
+                text-align: left;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            }
+            .nav-link {
+                color: black;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-item {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: left;
+                margin-left: 20px;
+                padding-bottom: 8px;
+                border-bottom: none;
+                line-height: 1;
+            }
+            .nav-menu.active .nav-item {
+                border-bottom: 2px solid rgba(0, 0, 0, 0.082);
+                /* Garis bawah hitam */
+            }
+            .hamburger {
+                display: block;
+                cursor: pointer;
+            }
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+        
+        .home .home-box {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(bgbg.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin-top: 5rem;
+        }
+        /* nav akhir */
+        
+        .home .home-box .content {
+            width: 100%;
+            height: calc(100% - 65px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .home .home-box .content h5 {
+            text-transform: uppercase;
+            color: white;
+            font-size: .9rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            margin-top: 9rem;
+        }
+        
+        .home .home-box .content h1 {
+            font-size: 4rem;
+            max-width: 50rem;
+            color: white;
+            /* Warna utama teks */
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 #036e89f3, /* Bayangan utama */
+            6px 6px 0 rgba(0, 0, 0, 0.1);
+            /* Opsional: Bayangan lembut */
+        }
+        
+        .home .home-box .content p {
+            color: white;
+            font-weight: 300;
+            max-width: 40rem;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .cta {
+            margin-top: 1rem;
+            display: inline-block;
+            padding: 2rem 4rem;
+            font-size: 1.5rem;
+            color: white;
+            background: linear-gradient(270deg, #036E89 30%, #369CB0 70%);
+            border-radius: 30px;
+            box-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
+            position: relative;
+            /* Dibutuhkan untuk efek tambahan */
+            overflow: hidden;
+            text-align: left;
+            /* Menghindari elemen glitch keluar dari tombol */
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            /* Awal di luar tombol */
+            width: 150%;
+            /* Lebih lebar dari tombol untuk efek smooth */
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-45deg);
+            /* Efek miring */
+            animation: glitch-light 2s infinite;
+            z-index: 1;
+            pointer-events: none;
+            /* Jangan mengganggu interaksi tombol */
+        }
+        
+        .cta:hover {
+            background: transparent;
+            border: 1px solid #036E89;
+            color: white;
+        }
+        
+        .o {
+            padding-bottom: 35px;
+        }
+        
+        @keyframes glitch-light {
+            0% {
+                left: -150%;
+                /* Mulai dari luar kiri */
+            }
+            50% {
+                left: 100%;
+                /* Bergerak ke luar kanan */
+            }
+            100% {
+                left: 150%;
+                /* Menghilang ke kanan */
+            }
+        }
+        /* Property Card Start */
+        
+        .main-card {
+            width: 800px;
+            max-height: none;
+            height: 300px;
+            margin: 20px auto;
+            padding: 1rem;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .property-section {
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .property-section h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        
+        .property-section p {
+            font-size: 14px;
+            color: black;
+            margin-bottom: 15px;
+            text-align: left;
+            font-weight: 300;
+            padding-right: 170px;
+        }
+        
+        .property-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 10px;
+            overflow-x: hidden;
+            /* Menghilangkan scroll horizontal */
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        .property-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 120px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+            flex-shrink: 0;
+            height: 100px;
+        }
+        
+        .card-header {
+            background-color: #444444c9;
+            font-size: 12px;
+            font-weight: bold;
+            color: black;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        
+        .card-body {
+            display: flex;
+            align-items: center;
+            /* Vertikal center gambar dan teks */
+            justify-content: flex-start;
+            /* Menjaga agar keduanya sejajar ke kiri */
+            padding: -10px;
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+        
+        .property-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            /* Memberikan jarak antara gambar dan teks */
+        }
+        
+        .property-card .card-body p {
+            margin-top: 15px;
+            /* Menambahkan jarak di atas teks p */
+            color: black;
+            font-weight: 400;
+        }
+        
+        .property-card p {
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0;
+        }
+        /* Media Query untuk perangkat kecil */
+        
+        @media (max-width: 768px) {
+            .home .home-box {
+                margin-top: -5rem;
+            }
+            .o {
+                padding-bottom: 20px;
+            }
+            .main-card {
+                width: 90%;
+                padding: 1rem;
+                max-height: none;
+                height: 165px;
+            }
+            .property-section h2 {
+                font-size: 20px;
+                text-align: center;
+                margin-left: 1rem;
+            }
+            .property-section p {
+                font-size: 14px;
+                text-align: center;
+                padding-right: 1rem;
+            }
+            .card-body {
+                padding: -5px;
+            }
+            .property-cards {
+                gap: 8px;
+                padding-left: 270px;
+            }
+            .property-card {
+                width: 100px;
+                height: 90px;
+                margin-right: .2rem;
+            }
+            .property-icon {
+                width: 32px;
+                height: 32px;
+            }
+            .property-card p {
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .home .home-box {
+                margin-top: -5rem;
+            }
+            .o {
+                padding-bottom: 20px;
+            }
+            .main-card {
+                width: 95%;
+                max-height: 300px;
+                padding: 0;
+                max-height: none;
+                height: 165px;
+            }
+            .property-section h2 {
+                font-size: 20px;
+                text-align: left;
+                margin-left: 1rem;
+            }
+            .property-section p {
+                font-size: 14px;
+                text-align: left;
+                padding-right: 9.3rem;
+            }
+            .card-body {
+                padding: -5px;
+            }
+            .property-cards {
+                gap: 8px;
+                padding-right: 5rem;
+            }
+            .property-card {
+                width: 90px;
+                height: 80px;
+                margin-right: .2rem;
+            }
+            .property-icon {
+                width: 32px;
+                height: 32px;
+            }
+            .property-card p {
+                font-size: 11px;
+            }
+        }
+        /* Property Card End */
+        /* footer section starts here  */
+        
+        footer {
+            width: 100%;
+        }
+        
+        footer .footer {
+            background: rgb(239, 238, 238);
+            padding: 6rem 7rem;
+            padding-bottom: 1rem;
+        }
+        
+        footer .footer .container {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid black;
+            gap: 2rem;
+        }
+        
+        footer .footer .container .detail {
+            max-width: 32rem;
+        }
+        
+        footer .footer .container .detail h3 img {
+            width: 180px;
+            height: auto;
+        }
+        
+        footer .footer .container .detail p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 2rem;
+        }
+        
+        footer .footer .container .detail h5 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: black;
+        }
+        
+        footer .footer .container .detail a {
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 1rem;
+            border-bottom: 2px solid #00cee4;
+            padding: 1px 0;
+            display: inline-block;
+        }
+        
+        footer .footer .container .detail .social {
+            display: flex;
+            gap: .8rem;
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        footer .footer .container .detail .social a {
+            border: none;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        
+        footer .footer .container h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: black;
+        }
+        
+        footer .footer .container li {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        footer .footer .container a {
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 1.4rem;
+        }
+        
+        footer .footer .container a:hover {
+            color: black;
+        }
+        
+        footer .footer .container span {
+            color: black;
+            background: #00cee4;
+            font-size: .9rem;
+            padding: .1rem .5rem;
+            border-radius: .3rem;
+            font-weight: 500;
+        }
+        
+        footer .footer .copyright {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: .9rem;
+            color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+        
+        footer .footer .copyright a {
+            color: rgba(0, 0, 0, 0.8);
+            margin-left: 1rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 1020px) {
+            footer .footer {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 910px) {
+            footer .footer .container {
+                flex-direction: column;
+            }
+        }
+        /* footer section ends here  */
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#" class="nav-logo"><img src="logofix.jpg" alt=""></a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">bank developer</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <a href="#" class="action-btn">Hubungi Kami</a>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+    <!-- home section starts here  -->
+    <section class="home">
+        <div class="home-box">
+            <div class="content">
+                <h5>adhome</h5>
+                <h1>cari rumah impian anda bersama adhome</h1>
+                <p>kenyamanan anda prioritas kami</p>
+
+
+                <!-- property start -->
+                <div class="main-card">
+                    <div class="property-section">
+                        <h2>Tipe Properti</h2>
+                        <p style="color: black;">Cari properti baru dan secondary di Linktown.</p>
+                        <div class="property-cards">
+                            <div class="property-card">
+                                <div class="card-header">Properti Baru</div>
+                                <div class="card-body">
+                                    <img src="house.png" alt="Rumah" class="property-icon" />
+                                    <p style="color: black;">Rumah</p>
+                                </div>
+                            </div>
+                            <div class="property-card">
+                                <div class="card-header">Properti Baru</div>
+                                <div class="card-body">
+                                    <img src="office-building.png" alt="Apartment" class="property-icon" />
+                                    <p style="color: black;">Apartment</p>
+                                </div>
+                            </div>
+                            <div class="property-card">
+                                <div class="card-header">Properti Baru</div>
+                                <div class="card-body">
+                                    <img src="store.png" alt="Ruko" class="property-icon" />
+                                    <p style="color: black;">Ruko</p>
+                                </div>
+                            </div>
+                            <div class="property-card">
+                                <div class="card-header">Properti Baru</div>
+                                <div class="card-body">
+                                    <img src="location-pin.png" alt="Kavling" class="property-icon" />
+                                    <p style="color: black;">Kavling</p>
+                                </div>
+                            </div>
+                            <div class="property-card">
+                                <div class="card-header">Properti Baru</div>
+                                <div class="card-body">
+                                    <img src="warehouse.png" alt="Gudang" class="property-icon" />
+                                    <p style="color: black;">Gudang</p>
+                                </div>
+                            </div>
+                            <div class="property-card">
+                                <div class="card-header">Properti Baru</div>
+                                <div class="card-body">
+                                    <img src="office.png" alt="Office" class="property-icon" />
+                                    <p style="color: black; ">Office</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="profil.html" class="cta o">Lihat Tentang Kami </a>
+                <!-- property end -->
+
+            </div>
+        </div>
+    </section>
+    <!-- home section ends here  -->
+
+
+    <!-- footer section starts here  -->
+    <footer>
+        <section class="footer">
+            <div class="container">
+                <div class="detail">
+                    <h3><img src="logor.png" alt=""></h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere in, non praesentium soluta quis enim aperiam aliquam, rem totam porro, vel obcaecati modi architecto error maiores iusto quaerat aut eum.</p>
+                    <h5>get in touch</h5>
+                    <a href="#">example@mail.com</a>
+                    <div class="social">
+                        <a href="#"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="#"><i class="fa fa-facebook-square"></i></a>
+                        <a href="#"><i class="fa fa-twitter-square"></i></a>
+                    </div>
+                </div>
+                <div class="about-us">
+                    <h4>about us</h4>
+                    <li><a href="#">about us</a></li>
+                    <li><a href="#">our term</a></li>
+                    <li><a href="#">careers <span>we're hiring!</span></a></li>
+                    <li><a href="#">mission and values</a></li>
+                    <li><a href="#">partnerships</a></li>
+                </div>
+                <div class="about-us">
+                    <h4>help</h4>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">booking guide</a></li>
+                    <li><a href="#">cancellation policy</a></li>
+                    <li><a href="#">site map</a></li>
+                </div>
+                <div class="about-us">
+                    <h4>Resources</h4>
+                    <li><a href="#">newsletter</a></li>
+                    <li><a href="#">blog</a></li>
+                    <li><a href="#">gallery</li>
+                <li><a href="#">offers</a></li>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <div style="color: black; font-weight: 540;">
+                    &copy;2024 - TravelX, inc, all rights reserved
+                </div>
+                <div>
+                    <a href="#">term & conditions</a>
+                    <a href="#">privacy policy</a>
+                </div>
+            </div>
+        </section>
+    </footer>
+    <!-- footer section ends here  -->
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        hamburger.addEventListener("click", mobileMenu);
+
+        function mobileMenu() {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        }
+
+
+
+
+        const navLink = document.querySelectorAll(".nav-link");
+
+        navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+        function closeMenu() {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }
+
+        const propertyCards = document.querySelector('.property-cards');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        propertyCards.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - propertyCards.offsetLeft;
+            scrollLeft = propertyCards.scrollLeft;
+        });
+
+        propertyCards.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        propertyCards.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        propertyCards.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - propertyCards.offsetLeft;
+            const walk = (x - startX) * 2; // Percepatan geseran
+            propertyCards.scrollLeft = scrollLeft - walk;
+        });
+
+        // Untuk perangkat sentuh (mobile)
+        let touchStartX;
+        let touchScrollLeft;
+
+        propertyCards.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].pageX - propertyCards.offsetLeft;
+            touchScrollLeft = propertyCards.scrollLeft;
+        });
+
+        propertyCards.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchMoveX = e.touches[0].pageX - propertyCards.offsetLeft;
+            const walk = (touchMoveX - touchStartX) * 2; // Percepatan geseran
+            propertyCards.scrollLeft = touchScrollLeft - walk;
+        });
+    </script>
+
+</body>
+
+</html>
